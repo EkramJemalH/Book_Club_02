@@ -53,20 +53,22 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 pb-10 border-b border-white/10">
           {/* Brand Column */}
           <div className="footer-brand">
-            <h2 className="font-griffy text-3xl text-white font-normal mb-3">
-              BookClub
-            </h2>
+            <Link href="/" className="block">
+              <h2 className="font-griffy text-3xl text-white font-normal mb-3 hover:text-[#D3A376] transition-colors">
+                BookClub
+              </h2>
+            </Link>
             <p className="text-sm leading-relaxed text-white/60 max-w-[300px] mb-4">
               Stories worth reading. Get your next favorite book from us.
             </p>
             <div className="footer-social flex gap-3">
-              <SocialIcon href="#" label="Instagram">
+              <SocialIcon href="https://instagram.com" label="Instagram">
                 <InstagramIcon />
               </SocialIcon>
-              <SocialIcon href="#" label="Facebook">
+              <SocialIcon href="https://facebook.com" label="Facebook">
                 <FacebookIcon />
               </SocialIcon>
-              <SocialIcon href="#" label="TikTok">
+              <SocialIcon href="https://tiktok.com" label="TikTok">
                 <TikTokIcon />
               </SocialIcon>
             </div>
@@ -81,7 +83,7 @@ export default function Footer() {
               <FooterLink href="/">Home</FooterLink>
               <FooterLink href="/books">Shop</FooterLink>
               <FooterLink href="/about">About Us</FooterLink>
-              <FooterLink href="#">Categories</FooterLink>
+              <FooterLink href="/#categories">Categories</FooterLink>
             </ul>
           </div>
 
@@ -92,21 +94,21 @@ export default function Footer() {
             </h3>
             <ul className="list-none p-0 m-0">
               <FooterLink href="/contact">Contact Us</FooterLink>
-              <FooterLink href="#">FAQs</FooterLink>
-              <FooterLink href="#">Shipping</FooterLink>
-              <FooterLink href="#">Returns</FooterLink>
+              <FooterLink href="/faq">FAQs</FooterLink>
+              <FooterLink href="/shipping">Shipping</FooterLink>
+              <FooterLink href="/returns">Returns</FooterLink>
             </ul>
           </div>
 
-          {/* Follow Us */}
+          {/* Follow Us - Social Links */}
           <div className="footer-links">
             <h3 className="text-white text-lg font-semibold mb-4 font-libertinus">
               Follow Us
             </h3>
             <ul className="list-none p-0 m-0">
-              <FooterLink href="#">Instagram</FooterLink>
-              <FooterLink href="#">Facebook</FooterLink>
-              <FooterLink href="#">TikTok</FooterLink>
+              <FooterLink href="https://instagram.com">Instagram</FooterLink>
+              <FooterLink href="https://facebook.com">Facebook</FooterLink>
+              <FooterLink href="https://tiktok.com">TikTok</FooterLink>
             </ul>
           </div>
         </div>
@@ -115,11 +117,17 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center pt-6 text-sm text-white/40 gap-4 md:gap-0">
           <p>&copy; {currentYear} BookClub. All rights reserved.</p>
           <div className="footer-legal flex items-center gap-3">
-            <Link href="#" className="text-white/40 no-underline transition-colors hover:text-[#D3A376]">
+            <Link 
+              href="/privacy" 
+              className="text-white/40 no-underline transition-colors hover:text-[#D3A376]"
+            >
               Privacy Policy
             </Link>
             <span className="text-white/20">|</span>
-            <Link href="#" className="text-white/40 no-underline transition-colors hover:text-[#D3A376]">
+            <Link 
+              href="/terms" 
+              className="text-white/40 no-underline transition-colors hover:text-[#D3A376]"
+            >
               Terms
             </Link>
           </div>

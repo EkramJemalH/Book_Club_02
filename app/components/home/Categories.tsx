@@ -82,7 +82,7 @@ const categories: Category[] = [
 
 export default function Categories() {
   return (
-    <section className="browse-categories py-16 px-8 bg-white">
+    <section id="categories" className="browse-categories py-16 px-8 bg-white">
       <div className="container max-w-[1100px] mx-auto">
         {/* Section Header */}
         <div className="section-header text-center mb-12">
