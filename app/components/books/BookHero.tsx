@@ -23,9 +23,9 @@ export default function BookHero({
 
   return (
     <>
-     {/* Header inside hero */}
-      <div className="absolute top-0 left-0 right-0 z-20"> <Header /> </div>
-      
+      <div className="absolute top-0 left-0 right-0 z-20">
+        <Header />
+      </div>
       <section
         className="book-hero relative flex min-h-[420px] items-center justify-center overflow-hidden"
         style={heroStyle}

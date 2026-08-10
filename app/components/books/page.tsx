@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react'
 import SearchFilter from './SearchFilter'
 import { Book } from '@/app/types'
 import { getAllBooks } from '@/app/services/bookApi'
-import Header from '@/app/components/layout/Header'
 import BookHero from '@/app/components/books/BookHero'
 import Footer from '@/app/components/layout/Footer'
 

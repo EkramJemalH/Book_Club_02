@@ -22,17 +22,17 @@ export default function ContactHero({
     backgroundRepeat: "no-repeat",
     backgroundColor: "#2d2a24",
   }
-  {/* Header */}
-<div className="relative z-20">
-        <Header />
-      </div>
+
   return (
     <section
       className="contact-hero relative flex min-h-[420px] items-center justify-center overflow-hidden"
       style={heroStyle}
     >
+      <div className="absolute inset-x-0 top-0 z-20 bg-black/30 backdrop-blur-md">
+        <Header />
+      </div>
       <div className="absolute inset-0 bg-book-dark/60" />
-      <div className="relative z-10 px-8 py-20 text-center">
+      <div className="relative z-10 px-8 py-20 pt-28 text-center">
         <p className="text-sm font-semibold uppercase tracking-[0.3em] text-book-gold">
           {subtitle}
         </p>

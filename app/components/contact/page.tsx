@@ -1,4 +1,3 @@
-import Header from '@/app/components/layout/Header'
 import ContactHero from '@/app/components/contact/ContactHero'
 import ContactInfo from '@/app/components/contact/ContactInfo'
 import ContactForm from '@/app/components/contact/ContactForm'

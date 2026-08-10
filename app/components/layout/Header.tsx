@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
+import { useState, useEffect } from 'react'
 import { usePathname } from 'next/navigation'
-import { useState } from 'react'
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -14,6 +14,34 @@ const navLinks = [
 export default function Header() {
   const pathname = usePathname()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+
+  // Close menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false)
+  }, [pathname])
+
+  // Prevent body scroll when menu is open
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMenuOpen])
+
+  // Close menu on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setIsMenuOpen(false)
+      }
+    }
+    window.addEventListener('keydown', handleEscape)
+    return () => window.removeEventListener('keydown', handleEscape)
+  }, [])
 
   return (
     <header className="relative z-50">
@@ -27,9 +55,11 @@ export default function Header() {
 
         {/* Mobile Menu Button */}
         <button
-          className="sm:hidden text-white focus:outline-none"
+          type="button"
+          className="sm:hidden text-white focus:outline-none z-50"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
           aria-label="Toggle menu"
+          aria-expanded={isMenuOpen}
         >
           <svg
             className="w-6 h-6"
@@ -74,17 +104,20 @@ export default function Header() {
 
       {/* Mobile Navigation */}
       <div
-        className={`sm:hidden bg-black/90 backdrop-blur-md transition-all duration-300 overflow-hidden ${
-          isMenuOpen ? 'max-h-96 py-4' : 'max-h-0'
+        className={`sm:hidden absolute inset-x-0 top-full bg-black/95 backdrop-blur-md overflow-hidden transition-all duration-300 ease-in-out ${
+          isMenuOpen
+            ? 'max-h-[calc(100vh-72px)] opacity-100'
+            : 'max-h-0 opacity-0 pointer-events-none'
         }`}
+        style={{ zIndex: 40 }}
       >
-        <ul className="flex flex-col items-center gap-4 m-0 p-0 list-none">
+        <ul className="flex flex-col items-center justify-center gap-8 m-0 p-0 list-none py-10">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className={`nav-link text-white text-lg ${
-                  pathname === link.href ? 'active' : ''
+                className={`nav-link text-white text-2xl hover:text-book-gold transition-colors duration-300 ${
+                  pathname === link.href ? 'active text-book-gold' : ''
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >

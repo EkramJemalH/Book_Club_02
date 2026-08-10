@@ -1,4 +1,3 @@
-import Header from '@/app/components/layout/Header'
 import Footer from '@/app/components/layout/Footer'
 import AboutHero from '@/app/components/about/AboutHero'
 import AboutStory from '@/app/components/about/AboutStory'
