@@ -4,12 +4,14 @@ interface ResultsCountProps {
   count: number
   searchQuery?: string
   genreFilter?: string
+  priceRange?: string
 }
 
 export default function ResultsCount({ 
   count, 
   searchQuery = '', 
-  genreFilter = 'all' 
+  genreFilter = 'all',
+  priceRange = 'all',
 }: ResultsCountProps) {
   let message = `Showing ${count} books`
   
@@ -19,6 +21,11 @@ export default function ResultsCount({
   
   if (genreFilter !== 'all') {
     message += ` in ${genreFilter}`
+  }
+
+  if (priceRange !== 'all') {
+    const label = priceRange === 'under10' ? 'under $10' : priceRange === '10to15' ? '$10–$15' : 'over $15'
+    message += ` (${label})`
   }
 
   return (

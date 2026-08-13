@@ -1,69 +1,73 @@
 'use client'
 
+import Link from 'next/link'
 import { Book } from '@/app/types'
-import { useState } from 'react'
 
 interface BookCardProps {
   book: Book
 }
 
 export default function BookCard({ book }: BookCardProps) {
-  const [imageError, setImageError] = useState(false)
-  const [isAddingToCart, setIsAddingToCart] = useState(false)
-
-  const handleAddToCart = () => {
-    setIsAddingToCart(true)
-    setTimeout(() => {
-      alert(`📚 Added "${book.title}" to cart!`)
-      setIsAddingToCart(false)
-    }, 500)
-  }
-
-  const imageUrl = imageError
-    ? '/images/book-placeholder.jpg'
-    : book.imageUrl || '/images/book-placeholder.jpg'
-
+  // Get the book ID from the key or use a fallback
+  const bookId = book.id || book.key || `book-${Math.random()}`
+  
   return (
-    <div className="book-card">
-      <div className="book-image">
-        <div className="book-placeholder">
+    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+      <Link href={`/books/${bookId}`}>
+        <div className="h-48 bg-gradient-to-br from-[#f0ece6] to-[#e5ddd4] relative overflow-hidden">
           <img
-            src={imageUrl}
+            src={book.imageUrl || '/images/book-placeholder.jpg'}
             alt={book.title}
+            className="h-full w-full object-cover"
             onError={(e) => {
-              // 🔍 DEBUG: log the real failing URL before falling back
-              console.warn(`⚠️ Cover image failed for "${book.title}":`, e.currentTarget.src)
-              setImageError(true)
+              e.currentTarget.src = '/images/book-placeholder.jpg'
             }}
-            loading="lazy"
           />
+          {book.rating && (
+            <div className="absolute top-3 right-3 bg-[#2d2a24]/90 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1">
+              <span>⭐</span>
+              {book.rating.toFixed(1)}
+            </div>
+          )}
+          {book.category && (
+            <div className="absolute bottom-3 left-3 bg-white/90 text-[#2d2a24] text-xs px-2 py-1 rounded-full">
+              {book.category}
+            </div>
+          )}
+          {book.pageCount && book.pageCount > 0 && (
+            <div className="absolute bottom-3 right-3 bg-[#2d2a24]/80 text-white text-xs px-2 py-1 rounded-full">
+              {book.pageCount} pages
+            </div>
+          )}
         </div>
-        {book.tag && (
-          <span className="book-badge">{book.tag}</span>
-        )}
-      </div>
-      <div className="book-info">
-        <h3>{book.title}</h3>
-        <p className="author">{book.author || book.authors?.[0] || 'Unknown Author'}</p>
-        <div className="book-rating flex items-center gap-2 mb-1">
-          <span className="stars text-yellow-500">⭐</span>
-          <span className="rating-number text-sm font-semibold text-book-dark">
-            {(book.rating || 4.5).toFixed(1)}
-          </span>
+        <div className="p-4">
+          <h3 className="text-lg font-semibold text-[#2d2a24] mb-1 line-clamp-2 group-hover:text-[#D3A376] transition-colors">
+            {book.title}
+          </h3>
+          <p className="text-sm text-gray-600 mb-3">
+            by {book.author || 'Unknown Author'}
+          </p>
+          <p className="text-sm text-gray-600 line-clamp-2 mb-3">
+            {book.description}
+          </p>
+          <div className="flex justify-between items-center border-t border-gray-100 pt-3">
+            <span className="text-lg font-bold text-[#D3A376]">
+              {book.price}
+            </span>
+          </div>
         </div>
-        <p className="book-description">
-          {book.description || `${book.title} is a captivating book.`}
-        </p>
-        <div className="book-footer">
-          <span className="book-price">{book.price || '$14.99'}</span>
-          <button
-            className={`btn-add-to-cart ${isAddingToCart ? 'opacity-70 cursor-not-allowed' : ''}`}
-            onClick={handleAddToCart}
-            disabled={isAddingToCart}
-          >
-            {isAddingToCart ? 'Adding...' : 'Add to Cart'}
-          </button>
-        </div>
+      </Link>
+      <div className="px-4 pb-4">
+        <button
+          className="w-full px-4 py-2 bg-[#2d2a24] text-white text-sm rounded-full hover:bg-[#D3A376] transition-all duration-300 hover:scale-[1.02] transform"
+          onClick={(e) => {
+            e.preventDefault()
+            e.stopPropagation()
+            alert(`📚 Added "${book.title}" to cart!`)
+          }}
+        >
+          Add to Cart
+        </button>
       </div>
     </div>
   )
