@@ -1,36 +1,86 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## BOOKCLUB
 
-## Getting Started
+## Overview
+        BookClub is A modern online bookstore built with Next.js that makes it easy for readers to discover, explore, and purchase both physical and digital books. The platform offers a carefully curated collection across multiple genres, with dedicated book pages that provide detailed information about each title. It is designed to create a simple and enjoyable browsing experience while making it easy to expand with features such as filtering, pagination, and a future online purchasing system.
+## Screenshot
+![landing page](image.png)
 
-First, run the development server:
+## Technology Used
+    Next.js 14+ - React framework with App Router
+    React 18+ - UI library
+    TypeScript - Type-safe JavaScript
+    Tailwind CSS - Utility-first CSS framework
+    Open Library API - Free book data API
+    Framer Motion - Smooth animations (optional)
+## Get Started
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Prerequest
+       -- Node.js (v18.0.0 or higher)
+        --npm or yarn or pnpm
+        --A modern web browser (Chrome, Firefox, Edge, Safari)
+        --Optional but recommended: A code editor (VS Code)
+## Installation
+    1.Clone the repo:
+        git clone https://github.com/EkramJemalH/Book_Club_02.git
+    2.Navigate to the project directory
+        cd book-club
+    3.Install dependencies
+        npm install
+    4.Run the development server
+        npm run dev
+    5.View the app
+       -- Open your browser and navigate to: http://localhost:3000
+       --The app will automatically open with hot-reload enabled
+ ## How to Use
+        Once the app is running, use the navigation bar to:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Browse Books
+        Home Page: View featured books and browse by category
+        Books Catalog: Browse all available books with search and filter options
+        Categories: Explore books by genre and subject
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Search & Discovery
+    Search Bar: Search for specific titles or authors
+    Filters: Narrow down results by:
+            Genre/Category
+            Publication year
+            Book format
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Shopping Cart
+    Add to Cart: Click the "Add to Cart" button on any book
+    Remove from Cart: Remove items from your cart
+    View Cart: See your current selections
+    Manage Quantity: Update quantities in your cart
+### About Page
+    Learn more about the book club
+    Contact information
+    Store policies and information
+## Contact Us 
+    form for the user to send message or feedback
+## Data Source
+        This project pulls book data from the Open Library API (https://openlibrary.org/developers/api). No API key or authentication is required to query the Open Library endpoints used by this app.
 
-## Learn More
+## Routes
+The application exposes the following routes (based on the `app/` folder layout):
 
-To learn more about Next.js, take a look at the following resources:
+    - `/` — Home / featured books
+    - `/about` — About page
+    - `/books` — Books listing
+    - `/books/[id]` — Book detail page (dynamic route)
+    - `/contact` — Contact page / form
+    - `/privacy` — Privacy page
+    - `/terms` — Terms page
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Key Features / Components
+    - Search and filtering -  Allows users to search for books and filter them by genre or category.
+    - Books grid and cards - Displays books in a clean, organized grid with reusable cards for each book.
+    - Book detail page and not-found fallback  — Provides detailed information about individual books and a helpful page when a book cannot be found.
+    - Data & service layer — Handles fetching and managing book data from the Open Library API.
+    - Layout and navigation — Provides consistent page structure and easy navigation throughout the website.
+    - Contact form  — Allows visitors to send messages or inquiries through the website.
+    - Utilities and types — Contains reusable helper functions and TypeScript types to keep the code organized and maintainable
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## What Is Still Unfinished / Next Steps
+    -- Complete and polish the book detail page with full book information and a clear purchase option.
+    -- Complete the cart page for viewing selected books, updating quantities, and reviewing the total.
+    -- Adding email handler for the contact us form
