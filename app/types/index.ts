@@ -3,6 +3,7 @@
 
 export interface Book {
   id: string
+  key?: string
   title: string
   authors?: string[]
   author?: string  // For featured books compatibility
