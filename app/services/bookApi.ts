@@ -356,7 +356,7 @@ if (olBook.cover_i) {
         publisher: olBook.publisher?.[0] || 'Unknown Publisher',
         rating: olBook.ratings_average || 4.5,
         isbn: isbn,
-        price: '$' + (Math.random() * 20 + 5).toFixed(2),
+        price: '$14.99', 
       };
     });
 
