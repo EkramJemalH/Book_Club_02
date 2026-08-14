@@ -1,5 +1,8 @@
 'use client'
 
+import emailjs from "@emailjs/browser"
+import {useRef} from "react"
+
 import { useState, FormEvent } from 'react'
 
 interface FormData {
@@ -30,30 +33,73 @@ export default function ContactForm() {
     setFormData((prev) => ({ ...prev, [id]: value }))
   }
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsSubmitting(true)
-    setSubmitStatus({ type: null, message: '' })
+  const formRef=useRef<HTMLFormElement>(null)
+const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  e.preventDefault()
+  setIsSubmitting(true)
+  setSubmitStatus({ type: null, message: '' })
 
-    try {
-      // Simulate API call - replace with actual email sending logic
-      await new Promise((resolve) => setTimeout(resolve, 1500))
+  try {
+    if (!formRef.current) return
 
-      // Success
-      setSubmitStatus({
-        type: 'success',
-        message: 'Your message has been sent successfully! We\'ll get back to you soon.',
-      })
-      setFormData({ name: '', email: '', subject: '', message: '' })
-    } catch (error) {
-      setSubmitStatus({
-        type: 'error',
-        message: 'Something went wrong. Please try again later.',
-      })
-    } finally {
-      setIsSubmitting(false)
-    }
+    console.log(
+  "EmailJS public key exists:",
+  !!process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+)
+
+console.log(
+  "EmailJS service exists:",
+  !!process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+)
+
+console.log(
+  "EmailJS template exists:",
+  !!process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+)
+
+    // Send the contact message to you
+    await emailjs.sendForm(
+      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+      process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID!,
+      formRef.current,
+      {
+        publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
+      }
+    )
+
+    // Send auto-reply to the visitor
+    await emailjs.sendForm(
+      process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID!,
+      'template_iszr8k9',
+      formRef.current,
+      {
+        publicKey: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY!,
+      }
+    )
+
+    setSubmitStatus({
+      type: 'success',
+      message:
+        "Your message has been sent successfully! We'll get back to you soon.",
+    })
+
+    setFormData({
+      name: '',
+      email: '',
+      subject: '',
+      message: '',
+    })
+  } catch (error) {
+    console.error('EmailJS Error:', error)
+
+    setSubmitStatus({
+      type: 'error',
+      message: 'Something went wrong. Please try again later.',
+    })
+  } finally {
+    setIsSubmitting(false)
   }
+}
 
   return (
     <div className="contact-form-wrapper bg-white p-8 rounded-2xl shadow-md">
@@ -61,7 +107,11 @@ export default function ContactForm() {
         Send Us a Message
       </h2>
 
-      <form className="contact-form flex flex-col gap-4" onSubmit={handleSubmit}>
+        <form
+          ref={formRef}
+          className="contact-form flex flex-col gap-4"
+          onSubmit={handleSubmit}
+        >
         <div className="form-group flex flex-col gap-1.5">
           <label htmlFor="name" className="text-sm font-semibold text-book-dark">
             Your Name
