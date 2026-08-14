@@ -42,7 +42,7 @@ const nextConfig: NextConfig = {
   },
 
   // Disable strict mode if causing issues
-  reactStrictMode: false,
+  reactStrictMode: true,
 
   // Enable experimental features if needed
   experimental: {
