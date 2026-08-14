@@ -51,7 +51,7 @@ const SEARCH_FIELDS = [
 // FALLBACK BOOKS DATA - Always available
 // ==========================================
 
-const FALLBACK_BOOKS: Book[] = [
+export const FALLBACK_BOOKS: Book[] = [
   {
     id: '1',
     title: 'The Great Gatsby',
