@@ -211,17 +211,14 @@ export async function fetchFeaturedBooks(): Promise<FeaturedBook[]> {
     isbn: customBook.isbn,
   }));
 
-  console.log(`📚 Using ${fallbackBooks.length} fallback books initially`);
-
   const enrichedResults = await Promise.all(
     fallbackBooks.map(async (book) => {
       try {
         if (!book.isbn) {
-          console.log(`⏭️ Skipping ${book.title} - no ISBN`);
           return book;
         }
 
-        console.log(`🔍 Fetching data for ${book.title} (ISBN: ${book.isbn})...`);
+    
 
         const response = await fetch(
           `${OPEN_LIBRARY_API_URL}?bibkeys=ISBN:${book.isbn}&format=json&jscmd=data`,
@@ -245,7 +242,6 @@ export async function fetchFeaturedBooks(): Promise<FeaturedBook[]> {
         }
 
         const olBook = data[key];
-        console.log(`🔍 RAW enrichment data for "${book.title}":`, JSON.stringify(olBook, null, 2))  // ADD THIS
         let updatedBook = { ...book };
 
         if (olBook.authors && olBook.authors.length > 0) {
@@ -271,7 +267,6 @@ export async function fetchFeaturedBooks(): Promise<FeaturedBook[]> {
           updatedBook.rating = olBook.ratings_average;
         }
 
-        console.log(`✅ Enriched ${updatedBook.title} with API data`);
         return updatedBook;
 
       } catch (error) {
@@ -281,7 +276,6 @@ export async function fetchFeaturedBooks(): Promise<FeaturedBook[]> {
     })
   );
 
-  console.log(`✅ Returned ${enrichedResults.length} featured books`);
   return enrichedResults;
 }
 
@@ -297,7 +291,6 @@ export async function searchBooks(query: string): Promise<Book[]> {
 
   try {
     const url = `${OPEN_LIBRARY_SEARCH_URL}?q=${encodeURIComponent(query)}&fields=${SEARCH_FIELDS}&limit=20`;
-    console.log(`🔍 Searching Open Library: ${url}`);
 
     const response = await fetch(url, {
       signal: AbortSignal.timeout(10000)
@@ -313,7 +306,7 @@ export async function searchBooks(query: string): Promise<Book[]> {
     // Open Library's docs use "num_found" in some examples and "numFound" in
     // others depending on API version — check both rather than assuming one.
     const foundCount = (data as any).num_found ?? (data as any).numFound ?? data.docs?.length ?? 0;
-    console.log(`📚 Open Library found ${foundCount} results, ${data.docs?.length || 0} docs returned`);
+    
 
     if (!data.docs || data.docs.length === 0) {
       console.warn(`No docs returned for query "${query}"`);
@@ -343,7 +336,7 @@ if (olBook.cover_i) {
       }
 
       return {
-        id: olBook.key || `book-${Math.random()}`,
+        id: olBook.key || olid || isbn || olBook.title || 'unknown-book',
         title: olBook.title || 'Unknown Title',
         author: olBook.author_name?.[0] || 'Unknown Author',
         authors: olBook.author_name || ['Unknown Author'],
@@ -360,7 +353,6 @@ if (olBook.cover_i) {
       };
     });
 
-    console.log(`✅ Mapped ${books.length} books for query "${query}"`);
     return books;
   } catch (error) {
     console.error(`❌ Error searching books for "${query}":`, error);
@@ -416,7 +408,7 @@ const smallThumbnail = olBook.cover_i
   : "/images/book-placeholder.jpg";
 
       return {
-        id: bookKey || olid || `book-${Math.random()}`,
+       id: bookKey || olid || isbn || olBook.title || 'unknown-book',
         volumeInfo: {
           title: olBook.title || "Unknown Title",
           authors: olBook.author_name || ["Unknown Author"],
@@ -480,16 +472,12 @@ const smallThumbnail = olBook.cover_i
 
 export async function getAllBooks(): Promise<Book[]> {
   try {
-    console.log('📚 Fetching all books...');
 
     const books = await searchBooks('fiction');
 
     if (books && books.length > 0) {
-      console.log(`✅ Found ${books.length} books from API`);
       return books;
     }
-
-    console.log('⚠️ No books from API, using fallback data');
     return FALLBACK_BOOKS;
   } catch (error) {
     console.error('Error fetching books:', error);
