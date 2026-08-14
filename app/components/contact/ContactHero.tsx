@@ -1,6 +1,7 @@
 'use client'
-
 import Header from '@/app/components/layout/Header'
+
+
 
 type ContactHeroProps = {
   title: string
@@ -29,7 +30,7 @@ export default function ContactHero({
       style={heroStyle}
     >
       <div className="absolute inset-x-0 top-0 z-20 bg-black/30 backdrop-blur-md">
-        <Header />
+      <Header/>
       </div>
       <div className="absolute inset-0 bg-book-dark/60" />
       <div className="relative z-10 px-8 py-20 pt-28 text-center">

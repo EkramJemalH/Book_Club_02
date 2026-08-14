@@ -2,7 +2,7 @@ import Footer from '@/app/components/layout/Footer'
 import ContactHero from '@/app/components/contact/ContactHero'
 import ContactInfo from '@/app/components/contact/ContactInfo'
 import ContactForm from '@/app/components/contact/ContactForm'
-
+import Header from '@/app/components/layout/Header'
 export default function ContactRoutePage() {
   return (
     <main>
