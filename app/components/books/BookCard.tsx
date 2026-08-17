@@ -1,7 +1,9 @@
 'use client'
 
 import Link from 'next/link'
+import { useState } from 'react'
 import { Book } from '@/app/types'
+import { useCart } from '@/app/components/cart/context/CartContext'
 
 interface BookCardProps {
   book: Book
@@ -10,7 +12,17 @@ interface BookCardProps {
 export default function BookCard({ book }: BookCardProps) {
   // Get the book ID from the key or use a fallback
   const bookId = book.id || book.key || `book-${Math.random()}`
-  
+  const { addToCart } = useCart()
+  const [justAdded, setJustAdded] = useState(false)
+
+  function handleAddToCart(e: React.MouseEvent) {
+    e.preventDefault()
+    e.stopPropagation()
+    addToCart(book)
+    setJustAdded(true)
+    setTimeout(() => setJustAdded(false), 1500)
+  }
+
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
       <Link href={`/books/${bookId}`}>
@@ -60,13 +72,9 @@ export default function BookCard({ book }: BookCardProps) {
       <div className="px-4 pb-4">
         <button
           className="w-full px-4 py-2 bg-[#2d2a24] text-white text-sm rounded-full hover:bg-[#D3A376] transition-all duration-300 hover:scale-[1.02] transform"
-          onClick={(e) => {
-            e.preventDefault()
-            e.stopPropagation()
-            alert(`📚 Added "${book.title}" to cart!`)
-          }}
+          onClick={handleAddToCart}
         >
-          Add to Cart
+          {justAdded ? '✓ Added!' : 'Add to Cart'}
         </button>
       </div>
     </div>
