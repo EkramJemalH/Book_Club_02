@@ -253,3 +253,6 @@ export function googleBookToFeaturedBook(
     isbn: gbBook.volumeInfo.industryIdentifiers?.find(id => id.type === 'ISBN_13')?.identifier || customData.isbn,
   };
 }
+export interface CartItem extends Book {
+  quantity: number
+}

@@ -1,5 +1,9 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import Header from '@/app/components/layout/Header'
+import Footer from '@/app/components/layout/Footer'
+import { CartProvider } from '@/app/components/cart/context/CartContext'
+
 
 export const metadata: Metadata = {
   title: 'BookClub - Stories Worth Reading',
@@ -14,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="font-libertinus antialiased">
+        <CartProvider>
         {children}
+        </CartProvider>
       </body>
     </html>
   )
